@@ -1,0 +1,448 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A220DFFB1F566EAE0006EE18 /* AudioQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = A220DFFA1F566EAE0006EE18 /* AudioQueue.m */; };
+		A220DFFD1F566FB30006EE18 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A220DFFC1F566FB30006EE18 /* OpenAL.framework */; };
+		A295CD8E1F504205007251E0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A295CD8D1F504205007251E0 /* main.m */; };
+		A295CD911F504205007251E0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A295CD901F504205007251E0 /* AppDelegate.m */; };
+		A295CD941F504205007251E0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A295CD931F504205007251E0 /* ViewController.m */; };
+		A295CD971F504205007251E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A295CD951F504205007251E0 /* Main.storyboard */; };
+		A295CD991F504205007251E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A295CD981F504205007251E0 /* Assets.xcassets */; };
+		A295CD9C1F504205007251E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A295CD9A1F504205007251E0 /* LaunchScreen.storyboard */; };
+		A295CE2B1F504236007251E0 /* capu.c in Sources */ = {isa = PBXBuildFile; fileRef = A295CDFB1F504236007251E0 /* capu.c */; };
+		A295CE2C1F504236007251E0 /* ccpu.c in Sources */ = {isa = PBXBuildFile; fileRef = A295CDFD1F504236007251E0 /* ccpu.c */; };
+		A295CE2D1F504236007251E0 /* cnes.c in Sources */ = {isa = PBXBuildFile; fileRef = A295CDFF1F504236007251E0 /* cnes.c */; };
+		A295CE2E1F504236007251E0 /* cppu.c in Sources */ = {isa = PBXBuildFile; fileRef = A295CE011F504236007251E0 /* cppu.c */; };
+		A295CE2F1F504236007251E0 /* cwnd.m in Sources */ = {isa = PBXBuildFile; fileRef = A295CE031F504236007251E0 /* cwnd.m */; };
+		A295CE301F504236007251E0 /* hq2x.c in Sources */ = {isa = PBXBuildFile; fileRef = A295CE061F504236007251E0 /* hq2x.c */; };
+		A295CE311F504236007251E0 /* hq3x.c in Sources */ = {isa = PBXBuildFile; fileRef = A295CE071F504236007251E0 /* hq3x.c */; };
+		A295CE321F504236007251E0 /* hq4x.c in Sources */ = {isa = PBXBuildFile; fileRef = A295CE081F504236007251E0 /* hq4x.c */; };
+		A295CE331F504236007251E0 /* mapper.c in Sources */ = {isa = PBXBuildFile; fileRef = A295CE0B1F504236007251E0 /* mapper.c */; };
+		A295CE341F504236007251E0 /* mapper_aorom.c in Sources */ = {isa = PBXBuildFile; fileRef = A295CE0D1F504236007251E0 /* mapper_aorom.c */; };
+		A295CE351F504236007251E0 /* mapper_cnrom.c in Sources */ = {isa = PBXBuildFile; fileRef = A295CE0E1F504236007251E0 /* mapper_cnrom.c */; };
+		A295CE361F504236007251E0 /* mapper_mmc1.c in Sources */ = {isa = PBXBuildFile; fileRef = A295CE0F1F504236007251E0 /* mapper_mmc1.c */; };
+		A295CE371F504236007251E0 /* mapper_mmc2.c in Sources */ = {isa = PBXBuildFile; fileRef = A295CE101F504236007251E0 /* mapper_mmc2.c */; };
+		A295CE381F504236007251E0 /* mapper_mmc3.c in Sources */ = {isa = PBXBuildFile; fileRef = A295CE111F504236007251E0 /* mapper_mmc3.c */; };
+		A295CE391F504236007251E0 /* mapper_nrom.c in Sources */ = {isa = PBXBuildFile; fileRef = A295CE121F504236007251E0 /* mapper_nrom.c */; };
+		A295CE3A1F504236007251E0 /* mapper_unrom.c in Sources */ = {isa = PBXBuildFile; fileRef = A295CE131F504236007251E0 /* mapper_unrom.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A220DFF91F566EAE0006EE18 /* AudioQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioQueue.h; sourceTree = "<group>"; };
+		A220DFFA1F566EAE0006EE18 /* AudioQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioQueue.m; sourceTree = "<group>"; };
+		A220DFFC1F566FB30006EE18 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		A295CD891F504205007251E0 /* TestNESiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestNESiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A295CD8D1F504205007251E0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A295CD8F1F504205007251E0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A295CD901F504205007251E0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A295CD921F504205007251E0 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		A295CD931F504205007251E0 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		A295CD961F504205007251E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A295CD981F504205007251E0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A295CD9B1F504205007251E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A295CD9D1F504205007251E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A295CDFB1F504236007251E0 /* capu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = capu.c; sourceTree = "<group>"; };
+		A295CDFC1F504236007251E0 /* capu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = capu.h; sourceTree = "<group>"; };
+		A295CDFD1F504236007251E0 /* ccpu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ccpu.c; sourceTree = "<group>"; };
+		A295CDFE1F504236007251E0 /* ccpu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccpu.h; sourceTree = "<group>"; };
+		A295CDFF1F504236007251E0 /* cnes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cnes.c; sourceTree = "<group>"; };
+		A295CE001F504236007251E0 /* cnes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cnes.h; sourceTree = "<group>"; };
+		A295CE011F504236007251E0 /* cppu.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cppu.c; sourceTree = "<group>"; };
+		A295CE021F504236007251E0 /* cppu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cppu.h; sourceTree = "<group>"; };
+		A295CE031F504236007251E0 /* cwnd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cwnd.m; sourceTree = "<group>"; };
+		A295CE051F504236007251E0 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
+		A295CE061F504236007251E0 /* hq2x.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hq2x.c; sourceTree = "<group>"; };
+		A295CE071F504236007251E0 /* hq3x.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hq3x.c; sourceTree = "<group>"; };
+		A295CE081F504236007251E0 /* hq4x.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hq4x.c; sourceTree = "<group>"; };
+		A295CE091F504236007251E0 /* hqx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hqx.h; sourceTree = "<group>"; };
+		A295CE0B1F504236007251E0 /* mapper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mapper.c; sourceTree = "<group>"; };
+		A295CE0C1F504236007251E0 /* mapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mapper.h; sourceTree = "<group>"; };
+		A295CE0D1F504236007251E0 /* mapper_aorom.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mapper_aorom.c; sourceTree = "<group>"; };
+		A295CE0E1F504236007251E0 /* mapper_cnrom.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mapper_cnrom.c; sourceTree = "<group>"; };
+		A295CE0F1F504236007251E0 /* mapper_mmc1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mapper_mmc1.c; sourceTree = "<group>"; };
+		A295CE101F504236007251E0 /* mapper_mmc2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mapper_mmc2.c; sourceTree = "<group>"; };
+		A295CE111F504236007251E0 /* mapper_mmc3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mapper_mmc3.c; sourceTree = "<group>"; };
+		A295CE121F504236007251E0 /* mapper_nrom.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mapper_nrom.c; sourceTree = "<group>"; };
+		A295CE131F504236007251E0 /* mapper_unrom.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mapper_unrom.c; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A295CD861F504205007251E0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A220DFFD1F566FB30006EE18 /* OpenAL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A295CD801F504205007251E0 = {
+			isa = PBXGroup;
+			children = (
+				A295CD8B1F504205007251E0 /* TestNESiOS */,
+				A295CD8A1F504205007251E0 /* Products */,
+				A295CE571F52C23F007251E0 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A295CD8A1F504205007251E0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A295CD891F504205007251E0 /* TestNESiOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A295CD8B1F504205007251E0 /* TestNESiOS */ = {
+			isa = PBXGroup;
+			children = (
+				A295CDFA1F504236007251E0 /* NES */,
+				A295CD8F1F504205007251E0 /* AppDelegate.h */,
+				A295CD901F504205007251E0 /* AppDelegate.m */,
+				A220DFF91F566EAE0006EE18 /* AudioQueue.h */,
+				A220DFFA1F566EAE0006EE18 /* AudioQueue.m */,
+				A295CD921F504205007251E0 /* ViewController.h */,
+				A295CD931F504205007251E0 /* ViewController.m */,
+				A295CD951F504205007251E0 /* Main.storyboard */,
+				A295CD981F504205007251E0 /* Assets.xcassets */,
+				A295CD9A1F504205007251E0 /* LaunchScreen.storyboard */,
+				A295CD9D1F504205007251E0 /* Info.plist */,
+				A295CD8C1F504205007251E0 /* Supporting Files */,
+			);
+			path = TestNESiOS;
+			sourceTree = "<group>";
+		};
+		A295CD8C1F504205007251E0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A295CD8D1F504205007251E0 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A295CDFA1F504236007251E0 /* NES */ = {
+			isa = PBXGroup;
+			children = (
+				A295CE041F504236007251E0 /* HQX */,
+				A295CE0A1F504236007251E0 /* MMC */,
+				A295CDFB1F504236007251E0 /* capu.c */,
+				A295CDFC1F504236007251E0 /* capu.h */,
+				A295CDFD1F504236007251E0 /* ccpu.c */,
+				A295CDFE1F504236007251E0 /* ccpu.h */,
+				A295CDFF1F504236007251E0 /* cnes.c */,
+				A295CE001F504236007251E0 /* cnes.h */,
+				A295CE011F504236007251E0 /* cppu.c */,
+				A295CE021F504236007251E0 /* cppu.h */,
+				A295CE031F504236007251E0 /* cwnd.m */,
+			);
+			path = NES;
+			sourceTree = "<group>";
+		};
+		A295CE041F504236007251E0 /* HQX */ = {
+			isa = PBXGroup;
+			children = (
+				A295CE051F504236007251E0 /* common.h */,
+				A295CE061F504236007251E0 /* hq2x.c */,
+				A295CE071F504236007251E0 /* hq3x.c */,
+				A295CE081F504236007251E0 /* hq4x.c */,
+				A295CE091F504236007251E0 /* hqx.h */,
+			);
+			path = HQX;
+			sourceTree = "<group>";
+		};
+		A295CE0A1F504236007251E0 /* MMC */ = {
+			isa = PBXGroup;
+			children = (
+				A295CE0B1F504236007251E0 /* mapper.c */,
+				A295CE0C1F504236007251E0 /* mapper.h */,
+				A295CE0D1F504236007251E0 /* mapper_aorom.c */,
+				A295CE0E1F504236007251E0 /* mapper_cnrom.c */,
+				A295CE0F1F504236007251E0 /* mapper_mmc1.c */,
+				A295CE101F504236007251E0 /* mapper_mmc2.c */,
+				A295CE111F504236007251E0 /* mapper_mmc3.c */,
+				A295CE121F504236007251E0 /* mapper_nrom.c */,
+				A295CE131F504236007251E0 /* mapper_unrom.c */,
+			);
+			path = MMC;
+			sourceTree = "<group>";
+		};
+		A295CE571F52C23F007251E0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A220DFFC1F566FB30006EE18 /* OpenAL.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A295CD881F504205007251E0 /* TestNESiOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A295CDA01F504205007251E0 /* Build configuration list for PBXNativeTarget "TestNESiOS" */;
+			buildPhases = (
+				A295CD851F504205007251E0 /* Sources */,
+				A295CD861F504205007251E0 /* Frameworks */,
+				A295CD871F504205007251E0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestNESiOS;
+			productName = TestNESiOS;
+			productReference = A295CD891F504205007251E0 /* TestNESiOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A295CD811F504205007251E0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = arvin;
+				TargetAttributes = {
+					A295CD881F504205007251E0 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = JDH29T7UQR;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = A295CD841F504205007251E0 /* Build configuration list for PBXProject "TestNESiOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A295CD801F504205007251E0;
+			productRefGroup = A295CD8A1F504205007251E0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A295CD881F504205007251E0 /* TestNESiOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A295CD871F504205007251E0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A295CD9C1F504205007251E0 /* LaunchScreen.storyboard in Resources */,
+				A295CD991F504205007251E0 /* Assets.xcassets in Resources */,
+				A295CD971F504205007251E0 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A295CD851F504205007251E0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A295CE351F504236007251E0 /* mapper_cnrom.c in Sources */,
+				A295CE371F504236007251E0 /* mapper_mmc2.c in Sources */,
+				A295CE2D1F504236007251E0 /* cnes.c in Sources */,
+				A295CE2C1F504236007251E0 /* ccpu.c in Sources */,
+				A295CE2B1F504236007251E0 /* capu.c in Sources */,
+				A295CE301F504236007251E0 /* hq2x.c in Sources */,
+				A295CE341F504236007251E0 /* mapper_aorom.c in Sources */,
+				A295CE381F504236007251E0 /* mapper_mmc3.c in Sources */,
+				A295CD941F504205007251E0 /* ViewController.m in Sources */,
+				A295CE311F504236007251E0 /* hq3x.c in Sources */,
+				A295CE391F504236007251E0 /* mapper_nrom.c in Sources */,
+				A295CD911F504205007251E0 /* AppDelegate.m in Sources */,
+				A295CE321F504236007251E0 /* hq4x.c in Sources */,
+				A295CE361F504236007251E0 /* mapper_mmc1.c in Sources */,
+				A295CE2F1F504236007251E0 /* cwnd.m in Sources */,
+				A295CD8E1F504205007251E0 /* main.m in Sources */,
+				A295CE331F504236007251E0 /* mapper.c in Sources */,
+				A220DFFB1F566EAE0006EE18 /* AudioQueue.m in Sources */,
+				A295CE3A1F504236007251E0 /* mapper_unrom.c in Sources */,
+				A295CE2E1F504236007251E0 /* cppu.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A295CD951F504205007251E0 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A295CD961F504205007251E0 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A295CD9A1F504205007251E0 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A295CD9B1F504205007251E0 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A295CD9E1F504205007251E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		A295CD9F1F504205007251E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A295CDA11F504205007251E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = JDH29T7UQR;
+				INFOPLIST_FILE = TestNESiOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TestNESiOS/NES/PORTAUDIO",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fuwo.test.vin.TestNESiOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A295CDA21F504205007251E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = JDH29T7UQR;
+				INFOPLIST_FILE = TestNESiOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TestNESiOS/NES/PORTAUDIO",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.fuwo.test.vin.TestNESiOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A295CD841F504205007251E0 /* Build configuration list for PBXProject "TestNESiOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A295CD9E1F504205007251E0 /* Debug */,
+				A295CD9F1F504205007251E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A295CDA01F504205007251E0 /* Build configuration list for PBXNativeTarget "TestNESiOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A295CDA11F504205007251E0 /* Debug */,
+				A295CDA21F504205007251E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A295CD811F504205007251E0 /* Project object */;
+}
