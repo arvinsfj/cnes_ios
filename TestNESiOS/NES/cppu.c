@@ -62,7 +62,7 @@ static uint16_t ppu_incr_y(ppu_context *p)
 //PPU寄存器读写逻辑开始
 uint8_t ppu_read_r(ppu_context *p, uint16_t addr)
 {
-    uint8_t reg = (addr-0x2000)&0x07, val = 0; int incr = 0; uint16_t vaddr = 0;
+    uint16_t vaddr = 0; uint8_t reg = (addr-0x2000)&0x07, val = 0; int incr = 0;
     switch (reg) {
         case REG_PPUSTATUS:
             val = p->regs[reg]; p->regs[reg] &= ~PPUSTATUS_V;
@@ -73,8 +73,8 @@ uint8_t ppu_read_r(ppu_context *p, uint16_t addr)
             break;
         case REG_PPUDATA:
             vaddr = p->reg_v & 0x3FFF;
-            if (vaddr <= 0x3EFF) { val = p->ppudata; p->ppudata = p->read8(vaddr); }//2次
-            else { val = p->read8(vaddr); }//调色板1次
+            if (vaddr <= 0x3EFF) { val = p->ppudata; p->ppudata = p->read8(vaddr); }
+            else { val = p->read8(vaddr); }
             incr = (p->regs[REG_PPUCTRL] & PPUCTRL_I) ? 32 : 1;
             p->reg_v = (p->reg_v + incr) & 0x3FFF;
             break;
@@ -87,41 +87,41 @@ uint8_t ppu_read_r(ppu_context *p, uint16_t addr)
 
 void ppu_write_r(ppu_context *p, uint16_t addr, uint8_t val)
 {
-    uint8_t reg = (addr-0x2000)&0x07; int incr = 0; uint16_t vaddr = 0;
+    uint16_t vaddr = 0; uint8_t reg = (addr-0x2000)&0x07; int incr = 0;
     switch (reg) {
         case REG_PPUCTRL:
             p->regs[reg] = val;
-            p->reg_tv = (p->reg_tv & 0xF3FF) | (((uint16_t)val & 0x3) << 10);//取val的低2位(VRAM中的NTA基址)
+            p->reg_t = (p->reg_t & 0xF3FF) | (((uint16_t)val & 0x3) << 10);//取val的低2位（Name Table Address）
             break;
         case REG_OAMADDR:
-            p->regs[reg] = val;
             p->oamaddr = val;
+            p->regs[reg] = val;
             break;
         case REG_OAMDATA:
-            p->regs[reg] = val;
             p->oam[p->oamaddr] = val;
             p->oamaddr = (p->oamaddr + 1) & 255;//地址加1，为第二次写入做准备
+            p->regs[reg] = val;
             break;
         case REG_PPUSCROLL:
-            p->regs[reg] = val;
             if (!p->reg_w) {//第一次写入
-                p->reg_tv = (p->reg_tv & 0xFFE0) | ((uint16_t)(val) >> 3);
-                p->reg_x = (val & 0x07);//低3位是 fine x
+                p->reg_t = (p->reg_t & 0xFFE0) | ((uint16_t)(val) >> 3);
+                p->reg_x = (val & 0x07);
             } else {//第二次写入
-                p->reg_tv = (p->reg_tv & 0x8FFF) | (((uint16_t)(val) & 0x07) << 12);
-                p->reg_tv = (p->reg_tv & 0xFC1F) | (((uint16_t)(val) & 0xF8) << 2);
+                p->reg_t = (p->reg_t & 0x8FFF) | (((uint16_t)(val) & 0x07) << 12);
+                p->reg_t = (p->reg_t & 0xFC1F) | (((uint16_t)(val) & 0xF8) << 2);
             }
             p->reg_w ^= 1;//写2次的跳动,0->1->0
+            p->regs[reg] = val;//regs中是第二次写的val数值
             break;
         case REG_PPUADDR:
-            p->regs[reg] = val;
             if (!p->reg_w) {
-                p->reg_tv = (p->reg_tv & 0x80FF) | (((uint16_t)(val) & 0x3F) << 8);
+                p->reg_t = (p->reg_t & 0x80FF) | (((uint16_t)(val) & 0x3F) << 8);
             } else {
-                p->reg_tv = (p->reg_tv & 0xFF00) | (uint16_t)(val);
-                p->reg_v = p->reg_tv;
+                p->reg_t = (p->reg_t & 0xFF00) | (uint16_t)(val);
+                p->reg_v = p->reg_t;
             }
             p->reg_w ^= 1;//写2次的跳动,0->1->0
+            p->regs[reg] = val;
             break;
         case REG_PPUDATA:
             vaddr = p->reg_v & 0x3FFF;
@@ -155,38 +155,38 @@ static void ppu_pixel(ppu_context *p, unsigned int x, unsigned int y)
 {
     const int show_background = (p->regs[REG_PPUMASK] & PPUMASK_b) != 0;
     const int show_sprites = (p->regs[REG_PPUMASK] & PPUMASK_s) != 0;
-    const uint16_t pal_start = 0x3F00;//调色板基地址
+    const uint16_t pal_start = 0x3f00;//调色板基地址
     if (show_background) {
         const uint8_t cs = (p->attr >> 30) & 3;//调色板编号
         const int bit = 1 << (15 - p->reg_x);
         const uint8_t pal = ((p->tile_l & bit) ? 1 : 0) | ((p->tile_h & bit) ? 2 : 0);//调色板内的颜色编号
         //删除对应的缓存数据位
         p->tile_l <<= 1; p->tile_h <<= 1; p->attr <<= 2;
-        if (x <= 0xFF) {//绘制可视区域扫描线
+        if (x <= 0xff) {//绘制可视区域扫描线
             p->pixels[y][x].pal = pal;
             p->pixels[y][x].has_sprite = 0;
             if (pal) {
                 p->pixels[y][x].priority = PPU_PRIO_BG;
-                p->pixels[y][x].c = p->read8(pal_start + (cs<<2) + pal) & 0x3F;//真实的系统调色板颜色索引
+                p->pixels[y][x].c = p->read8(pal_start + (cs<<2) + pal) & 0x3f;//真实的系统调色板颜色索引
             } else {
                 p->pixels[y][x].priority = PPU_PRIO_NONE;
-                p->pixels[y][x].c = p->read8(pal_start) & 0x3F;//系统默认背景颜色
+                p->pixels[y][x].c = p->read8(pal_start) & 0x3f;//系统默认背景颜色
             }
             if (x < 8 && ((p->regs[REG_PPUMASK] & PPUMASK_m) == 0)) {//应该是等于0
                 p->pixels[y][x].priority = PPU_PRIO_NONE;
                 p->pixels[y][x].pal = 0;
-                p->pixels[y][x].c = p->read8(pal_start) & 0x3F;
+                p->pixels[y][x].c = p->read8(pal_start) & 0x3f;
             }
         }
     } else {
-        if (x <= 0xFF) {
+        if (x <= 0xff) {
             p->pixels[y][x].priority = PPU_PRIO_NONE;
             p->pixels[y][x].pal = 0;
-            p->pixels[y][x].c = p->read8(pal_start) & 0x3F;
+            p->pixels[y][x].c = p->read8(pal_start) & 0x3f;
             p->pixels[y][x].has_sprite = 0;
         }
     }
-    if (x > 0xFF) return;
+    if (x > 0xff) return;
     if (show_sprites) {
         const uint16_t sprite_height = (p->regs[REG_PPUCTRL] & PPUCTRL_H) ? 16 : 8;
         for (int i = 0; i < p->scanline_num_sprites; i++) {
@@ -194,7 +194,7 @@ static void ppu_pixel(ppu_context *p, unsigned int x, unsigned int y)
             const uint8_t sprite_y = p->oam[n * 4 + 0] + 1;
             const uint8_t sprite_x = p->oam[n * 4 + 3];
             //过滤Y显示不全的精灵
-            if (sprite_y == 0 || sprite_y >= 0xF0) continue;
+            if (sprite_y == 0 || sprite_y >= 0xf0) continue;
             //过滤不在精灵X范围的像素绘制
             if (x < sprite_x || x >= sprite_x + 8) continue;
             const unsigned int xrel = x - sprite_x;
@@ -206,7 +206,7 @@ static void ppu_pixel(ppu_context *p, unsigned int x, unsigned int y)
             const int priority = (sprite_attr & 0x20) != 0 ? PPU_PRIO_BEHIND : PPU_PRIO_FRONT;
             
             const uint16_t pat_start = sprite_height == 8 ? ((p->regs[REG_PPUCTRL] & PPUCTRL_S) ? 0x1000 : 0x0000) : (sprite_tile & 1) << 12;
-            const uint16_t sprite_tile_start = sprite_height == 8 ? sprite_tile : (sprite_tile & 0xFE);
+            const uint16_t sprite_tile_start = sprite_height == 8 ? sprite_tile : (sprite_tile & 0xfe);
             
             uint16_t pat_off = sprite_tile_start * 16 + (flip_v ? ((sprite_height - 1) - (yrel & (sprite_height - 1))) : (yrel & (sprite_height - 1)));
             if (yrel >= 8) pat_off += 8;
@@ -219,37 +219,36 @@ static void ppu_pixel(ppu_context *p, unsigned int x, unsigned int y)
             const uint8_t pal = ((pat_l & (1 << bit)) ? 1 : 0) | ((pat_h & (1 << bit)) ? 2 : 0);
             
             if (n == 0 && p->pixels[y][x].pal != 0 && pal != 0) {
-                if (p->sprite0_hit == 0) {
-                    p->regs[REG_PPUSTATUS] |= PPUSTATUS_S;
-                    p->sprite0_hit = 1;
+                if (!(p->regs[REG_PPUSTATUS] & PPUSTATUS_S)) {
+                    p->regs[REG_PPUSTATUS] |= PPUSTATUS_S;//sprite0 hit
                 }
             }
             
             if (p->pixels[y][x].has_sprite) continue;
             if (pal) p->pixels[y][x].has_sprite = 1;
             if (priority <= p->pixels[y][x].priority || pal == 0) continue;
-            const uint8_t cs = (sprite_attr & 0x3) + 4;//精灵有自己的调色板
+            const uint8_t cs = (sprite_attr & 0x3) + 4;
             p->pixels[y][x].priority = priority;
             p->pixels[y][x].pal = pal;
-            p->pixels[y][x].c = p->read8(pal_start + (cs<<2) + pal) & 0x3f;//获取真实的系统调色板索引数值
+            p->pixels[y][x].c = p->read8(pal_start + (cs * 4) + pal) & 0x3f;//获取真实的系统调色板索引数值
             break;
         }
     }
 }
 
-static uint8_t ppu_bg_cs(uint8_t cs, unsigned int x, unsigned int y)
+static uint8_t ppu_bg_cs(uint8_t attr, unsigned int x, unsigned int y)
 {
     //获取背景4个BLOCK块（4*4个tile）中坐标（x， y）的attr数值（颜色索引的高2位，决定了调色板）
-    if ((x & 0x1f) < 16 && (y & 0x1f) < 16) { return (cs >> 0) & 0x3; }
-    else if ((x & 0x1f) < 16 && (y & 0x1f) >= 16) { return (cs >> 4) & 0x3; }
-    else if ((x & 0x1f) >= 16 && (y & 0x1f) < 16) { return (cs >> 2) & 0x3; }
-    else { return (cs >> 6) & 0x3; }
+    if ((x & 0x1f) < 16 && (y & 0x1f) < 16) { return (attr >> 0) & 0x3; }
+    else if ((x & 0x1f) < 16 && (y & 0x1f) >= 16) { return (attr >> 4) & 0x3; }
+    else if ((x & 0x1f) >= 16 && (y & 0x1f) < 16) { return (attr >> 2) & 0x3; }
+    else { return (attr >> 6) & 0x3; }
 }
 //渲染资源拿取函数
 static void ppu_fetch(ppu_context *p)
 {
     const uint8_t nt = p->read8(PPU_TILE_ADDR(p->reg_v));//reg_v地址的低12位为nametable地址，首位加上2
-    const uint8_t fine_y = p->reg_v >> 12;//reg_v地址的3位为fine_y数值
+    const uint8_t fine_y = p->reg_v >> 12;//reg_v地址的高4位为fine_y数值(3)
     const uint8_t fine_x = p->reg_x;//reg_x存放fine_x
     const int xscroll = ((p->reg_v & 0x1f) << 3) | fine_x;
     const int yscroll = (((p->reg_v >> 5) & 0x1f) << 3) | fine_y;
@@ -259,7 +258,7 @@ static void ppu_fetch(ppu_context *p)
         if (i == (8 - p->reg_x)) curattr = p->read8(PPU_ATTR_ADDR(ppu_incr_x(p)));
         attr <<= 2; attr |= ppu_bg_cs(curattr, xscroll + i, yscroll);
     }
-    p->attr |= attr;//设置attr，只有2位有效位
+    p->attr |= attr;//设置attr
     const uint16_t pat_start = (p->regs[REG_PPUCTRL] & PPUCTRL_B) ? 0x1000 : 0x0000;
     const uint16_t pat_off = (uint16_t)nt * 16 + (p->reg_v >> 12);
     p->tile_l |= p->read8(pat_start + pat_off);//设置tile
@@ -280,47 +279,43 @@ int ppu_step_i(ppu_context *p)
         p->frame++;//帧数加1
         return 1;
     } else {
-        //每行需要341个tick，总共262行(262条扫描线)
-        const unsigned int tick = PPU_TICKS_PER_FRAME - p->frame_ticks;//当前tick,0,2,3,4,5,6....
-        const int scanline = (tick / 341) - 1;//当前扫描线，扫描线从-1开始
-        const unsigned int scanline_cycle = tick % 341;//当前扫描线下的第几个tick
+        //每行需要341个tick，总共262行(262条扫描线) 341 * 262
+        const unsigned int tick = PPU_TICKS_PER_FRAME - p->frame_ticks;//当前是第几个tick
+        const int scanline = (tick / 341) - 1;//当前扫描线，扫描线从-1开始，Y
+        const unsigned int scanline_cycle = tick % 341;//当前扫描线下的第几个tick，X
         const int show_background = (p->regs[REG_PPUMASK] & PPUMASK_b) != 0;//0:不显示背景，1:显示背景
         const int show_sprites = (p->regs[REG_PPUMASK] & PPUMASK_s) != 0;//0:不显示精灵，1:显示精灵
         const int render_enable = show_background || show_sprites;//只要需要显示背景或者精灵，就需要重新渲染
-        if (render_enable && (scanline == -1)) {
-            if (scanline_cycle == 1) {//1个tick
-                p->regs[REG_PPUSTATUS] &= ~(PPUSTATUS_S | PPUSTATUS_V);//将ppustatus的6、7位设置0
-                p->sprite0_hit = 0;
-            } else if ((scanline_cycle >= 280) && (scanline_cycle <= 304)) {//25个tick
-                p->reg_v &= ~0x7BE0;
-                p->reg_v |= (p->reg_tv & 0x7BE0);//设置vram的地址
+        
+        if ((render_enable && scanline >= -1) && (scanline <= 239)) {//可视区域的扫描线
+            if (scanline == -1) {
+                if (scanline_cycle == 1) {//1个tick
+                    p->regs[REG_PPUSTATUS] &= ~(PPUSTATUS_S | PPUSTATUS_V);//将ppustatus的6、7位设置0
+                }
+                if ((scanline_cycle >= 280) && (scanline_cycle <= 304)) {//25个tick,,the vertical scroll bits
+                    p->reg_v &= ~0x7be0; p->reg_v |= (p->reg_t & 0x7be0);//设置vram的地址
+                }
+            }else{
+                if (scanline_cycle == 0) { ppu_sprites(p, scanline); }
+                if ((scanline_cycle >= 1) && (scanline_cycle <= 256)) { ppu_pixel(p, scanline_cycle-1, scanline); }
+                if (scanline_cycle > 0 && scanline_cycle < 256 && (scanline_cycle & 7) == 0) ppu_fetch(p);
             }
-        } else if ((render_enable && scanline >= 0) && (scanline <= 239)) {//可视区域的扫描线
-            if (scanline_cycle == 0) { ppu_sprites(p, scanline); }
-            else if ((scanline_cycle >= 1) && (scanline_cycle <= 256)) { ppu_pixel(p, scanline_cycle-1, scanline); }
-            else if ((scanline_cycle >= 257) && (scanline_cycle <= 320)) { }
-            else if ((scanline_cycle >= 321) && (scanline_cycle <= 336)) { }
-            else if ((scanline_cycle >= 337) && (scanline_cycle <= 340)) { }
-        } else if (scanline == 240) {//1个tick
-        } else if ((scanline >= 241) && (scanline <= 260)) {//20个tick
-            if ((scanline == 241) && (scanline_cycle == 1)) {
+            if (scanline_cycle == 256) p->reg_v = ppu_incr_y(p);//扫描线换行
+            if (scanline_cycle == 257) { p->reg_v &= ~0x41f; p->reg_v |= (p->reg_t & 0x41f); }//0x41f和0x7be0相对
+            if (scanline_cycle == 321) {//1个tick
+                p->attr = p->tile_l = p->tile_h = 0;
+                ppu_fetch(p);//拿取渲染资源（attr和tile）
+                p->tile_l <<= 8; p->tile_h <<= 8; p->attr <<= 16;
+            }
+            if (scanline_cycle == 329) ppu_fetch(p);//拿取渲染资源（attr和tile）
+            
+        } else if ((scanline >= 240) && (scanline <= 260)) {//21个tick
+            if ((scanline == 241) && (scanline_cycle == 1)) {//vblank:回到屏幕左上角
                 p->regs[REG_PPUSTATUS] |= PPUSTATUS_V;
                 if (p->regs[REG_PPUCTRL] & PPUCTRL_V) cpu_nmi(p->cpu);
             }
         }
         
-        if (render_enable && scanline >= -1 && scanline <= 239) {//pre render 和 可视区域扫描线
-            if (scanline_cycle > 0 && (scanline_cycle & 7) == 0 && scanline_cycle < 256) ppu_fetch(p);
-            if (scanline_cycle == 256) p->reg_v = ppu_incr_y(p);
-            if (scanline_cycle == 257) { p->reg_v &= ~0x041F; p->reg_v |= (p->reg_tv & 0x041F); }
-            if (scanline_cycle == 321) {//1个tick
-                p->tile_l = p->tile_h = 0;
-                ppu_fetch(p);//拿取渲染资源（attr和tile）
-                p->tile_l <<= 8;
-                p->tile_h <<= 8;
-                p->attr <<= 16;
-            } else if (scanline_cycle == 329) ppu_fetch(p);//拿取渲染资源（attr和tile）
-        }
         p->frame_ticks--;//ticks用完，每次减小1
         return 0;
     }
