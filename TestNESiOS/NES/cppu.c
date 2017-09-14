@@ -268,33 +268,28 @@ static void ppu_fetch(ppu_context *p)
 
 int ppu_step_i(ppu_context *p)
 {
-    if (!p->frame_ticks) {//时钟周期用完了
+    if (p->frame_ticks == PPU_TICKS_PER_FRAME - 1) {//时钟周期用完了
         if (p->draw){//绘图
             uint8_t* index = (uint8_t*)p->pallete_index; pixel* pixels = (pixel*)p->pixels;
             for (unsigned long i = 0; i < PPU_HEIGHT*PPU_WIDTH; i++) *index++ = (pixels++)->c;
             p->draw((uint8_t*)p->pallete_index);
         }
-        p->frame_ticks = PPU_TICKS_PER_FRAME;//重新分配时钟周期
-        if ((p->frame & 1) || (p->regs[REG_PPUMASK]&PPUMASK_b)) p->frame_ticks -= 1;
+        p->frame_ticks = 0;//重新分配时钟周期
+        if ((p->frame & 1) || (p->regs[REG_PPUMASK]&PPUMASK_b)) p->frame_ticks += 1;
         p->frame++;//帧数加1
         return 1;
     } else {
         //每行需要341个tick，总共262行(262条扫描线) 341 * 262
-        const unsigned int tick = PPU_TICKS_PER_FRAME - p->frame_ticks;//当前是第几个tick
-        const int scanline = (tick / 341) - 1;//当前扫描线，扫描线从-1开始，Y
-        const unsigned int scanline_cycle = tick % 341;//当前扫描线下的第几个tick，X
+        const int scanline = (p->frame_ticks / 341) - 1;//当前扫描线，扫描线从-1开始，Y
+        const unsigned int scanline_cycle = p->frame_ticks % 341;//当前扫描线下的第几个tick，X
         const int show_background = (p->regs[REG_PPUMASK] & PPUMASK_b) != 0;//0:不显示背景，1:显示背景
         const int show_sprites = (p->regs[REG_PPUMASK] & PPUMASK_s) != 0;//0:不显示精灵，1:显示精灵
         const int render_enable = show_background || show_sprites;//只要需要显示背景或者精灵，就需要重新渲染
         
         if ((render_enable && scanline >= -1) && (scanline <= 239)) {//可视区域的扫描线
             if (scanline == -1) {
-                if (scanline_cycle == 1) {//1个tick
-                    p->regs[REG_PPUSTATUS] &= ~(PPUSTATUS_S | PPUSTATUS_V);//将ppustatus的6、7位设置0
-                }
-                if ((scanline_cycle >= 280) && (scanline_cycle <= 304)) {//25个tick,,the vertical scroll bits
-                    p->reg_v &= ~0x7be0; p->reg_v |= (p->reg_t & 0x7be0);//设置vram的地址
-                }
+                if (scanline_cycle == 1) { p->regs[REG_PPUSTATUS] &= ~(PPUSTATUS_S | PPUSTATUS_V); }
+                if (scanline_cycle == 280) { p->reg_v &= ~0x7be0; p->reg_v |= (p->reg_t & 0x7be0); }
             }else{
                 if (scanline_cycle == 0) { ppu_sprites(p, scanline); }
                 if ((scanline_cycle >= 1) && (scanline_cycle <= 256)) { ppu_pixel(p, scanline_cycle-1, scanline); }
@@ -302,12 +297,8 @@ int ppu_step_i(ppu_context *p)
             }
             if (scanline_cycle == 256) p->reg_v = ppu_incr_y(p);//扫描线换行
             if (scanline_cycle == 257) { p->reg_v &= ~0x41f; p->reg_v |= (p->reg_t & 0x41f); }//0x41f和0x7be0相对
-            if (scanline_cycle == 321) {//1个tick
-                p->attr = p->tile_l = p->tile_h = 0;
-                ppu_fetch(p);//拿取渲染资源（attr和tile）
-                p->tile_l <<= 8; p->tile_h <<= 8; p->attr <<= 16;
-            }
-            if (scanline_cycle == 329) ppu_fetch(p);//拿取渲染资源（attr和tile）
+            if (scanline_cycle == 321) { p->attr = p->tile_l = p->tile_h = 0; ppu_fetch(p); p->tile_l <<= 8; p->tile_h <<= 8; p->attr <<= 16; }
+            if (scanline_cycle == 329) ppu_fetch(p);
             
         } else if ((scanline >= 240) && (scanline <= 260)) {//21个tick
             if ((scanline == 241) && (scanline_cycle == 1)) {//vblank:回到屏幕左上角
@@ -316,7 +307,7 @@ int ppu_step_i(ppu_context *p)
             }
         }
         
-        p->frame_ticks--;//ticks用完，每次减小1
+        p->frame_ticks++;//tick每次加1
         return 0;
     }
 }
@@ -324,7 +315,7 @@ int ppu_step_i(ppu_context *p)
 //对外接口函数
 void ppu_init(ppu_context *p)
 {
-    p->frame = 0; p->frame_ticks = PPU_TICKS_PER_FRAME;
+    p->frame = 0; p->frame_ticks = 0;
 }
 
 int ppu_step(ppu_context *p)
